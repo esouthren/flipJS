@@ -38,8 +38,7 @@ function createMinefield(HEIGHT, LENGTH) {
 function getSpot(minefield, row, column) {
     return minefield.rows[column].spots[row];
 }
-
-        
+       
 function calculateNumber(minefield, row, column) {
     var thisSpot = getSpot(minefield, row, column);
     
@@ -127,16 +126,21 @@ function calculateNumber(minefield, row, column) {
         thisSpot.content = mineCount;
     }
 }
-
-
+      
 function MinesweeperController($scope) {
    
+    $scope.coveredImage = "covered.png";
+    $scope.emptyImage = "empty.png";
+
     $scope.HEIGHT = 3;
     $scope.LENGTH = 3;
     $scope.clicks = 0;
     // toggle controls grid selector visibility
     $scope.difficultyToggle = false;
     $scope.newGameToggle = true;
+    
+    $scope.menuToggle = true;
+    $scope.coverToggle = true;
     
     $scope.buttonClick = function(length, height) {
         $scope.HEIGHT = height;
@@ -146,6 +150,27 @@ function MinesweeperController($scope) {
         $scope.difficultyToggle = true;
         $scope.newGameToggle = false;
        
+    }
+    
+    $scope.menuButton = function() {
+        $scope.menuToggle = ($scope.menuToggle) ? false : true;
+        $scope.coverToggle = ($scope.coverToggle) ? false : true; 
+    }
+    
+    $scope.redScheme = function() {
+       $scope.menuButton(); 
+        $scope.coveredImage = "redCovered.png";
+        $scope.emptyImage = "redEmpty.png";        
+    }
+    $scope.greenScheme = function() {
+       $scope.menuButton(); 
+        $scope.coveredImage = "greenCovered.png";
+        $scope.emptyImage = "greenEmpty.png";        
+    }
+    $scope.blueScheme = function() {
+       $scope.menuButton(); 
+        $scope.coveredImage = "covered.png";
+        $scope.emptyImage = "empty.png";        
     }
     
     $scope.newGame = function() {
@@ -277,29 +302,48 @@ function MinesweeperController($scope) {
         
     </head>
     
-    <body>    
-        <div class="main" ng-controller="MinesweeperController">
-            <h1>flipJS</h1>  
-          
-            <button class="difficultyButton" ng-click="buttonClick(3,3)" ng-hide="difficultyToggle"><h2>easy</h2></button><br />
-            <button class="difficultyButton" ng-click="buttonClick(5,5)" ng-hide="difficultyToggle"><h2>medium</h2></button><br />
-            <button class="difficultyButton" ng-click="buttonClick(9,9)" ng-hide="difficultyToggle"><h2>difficult</h2></button><br />
-            <button class="difficultyButton" ng-click="buttonClick(15,15)" ng-hide="difficultyToggle"><h2>what are you thinking</h2></button>
-                     
-            <table  class="minefield">
-                <tr ng-repeat="row in minefield.rows">
-                    <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
-                        <img ng-if="spot.isCovered" src="covered.png">
-                        <img ng-if="!spot.isCovered" src="empty.png">
-                    </td>
-                </tr>
-            </table>
-        <br /> 
-        <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
-        <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
+    <body>
         
-            <button class="clickButton" ng-hide="newGameToggle"><h2>Clicks: {{ clicks }}</h2></button>
-            <button class="difficultyButton" ng-click="newGame()" ng-hide="newGameToggle"><h2>New Game</h2></button>    
+        
+        <div id="main" ng-controller="MinesweeperController">
+            
+            <button class="openMenu" ng-click="menuButton()" ><img src="cog.png" height=30 width=30/></button>
+            
+            <div id="menuBodyCover" ng-hide="coverToggle"></div>
+                
+            <div id="menu" ng-hide="menuToggle"><h2>Colour Scheme</h2>
+                
+                <button style="background-color: coral" class="difficultyButton" ng-click="redScheme()"><h3>Red</h3></button>
+                <button style="background-color: lightblue" class="difficultyButton" ng-click="blueScheme()"><h3>Blue</h3></button>
+                <button style="background-color: lightgreen" class="difficultyButton" ng-click="greenScheme()"><h3>Green</h3></button>
+                
+            </div>
+            <!-- <h1><p class="header">flipJS</p></h1> -->
+            
+            <img src="headerImage.png" align="right"/>
+                
+        <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(3,3)"  ng-hide="difficultyToggle"><h2>easy</h2></button><br />
+        <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(5,5)" ng-hide="difficultyToggle"><h2>medium</h2></button><br />
+        <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(9,9)" ng-hide="difficultyToggle"><h2>difficult</h2></button><br />
+        <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(15,15)" ng-hide="difficultyToggle"><h2>what are you thinking</h2></button>
+
+        <table  class="minefield">
+            <tr ng-repeat="row in minefield.rows">
+                <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
+                    <img ng-if="spot.isCovered" src="{{ coveredImage }}">
+                    <img ng-if="!spot.isCovered" src="{{ emptyImage }}">
+                </td>
+            </tr>
+        </table>
+    <br /> 
+    <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
+    <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
+
+        <button class="clickButton" ng-hide="newGameToggle"><h2>Clicks: {{ clicks }}</h2></button>
+        <button class="difficultyButton" ng-click="newGame()" ng-hide="newGameToggle"><h2>New Game</h2></button> 
+        <br />
+            
+            
          
            
                 

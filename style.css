@@ -1,0 +1,115 @@
+  body {
+                background-color:dodgerblue;
+      position: relative;
+      height: 100%;
+        }    
+
+
+    #menu {
+        z-index: 1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        top: 0px;
+        height: 250px;
+        min-height: 200px;
+        min-width: 240px;
+        width: 20%;
+        background-color: dodgerblue;
+        color: white;
+        padding: 10px;
+        padding-top: 50px;
+        border-radius: 10px;
+        border: 2px black;
+    }
+.header {
+    font-size: 200%;
+    text-align: right; 
+    position: relative;
+}
+
+
+#menu.ng-hide {
+    transition: all linear 2s;
+}
+
+    #menuBodyCover {
+        min-width: 100%;
+        min-height: 100%;
+        background-color: darkblue;
+        position: fixed;
+        opacity: 0.8;
+        border: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+        #main {
+            background-color: floralwhite;
+            padding: 20px 20px 20px 20px;
+            min-height: 550px;
+            border: 0;
+            min-width: 370px;
+            height: 50%;
+            width: 30%;
+            font-family: sans-serif;
+            border-radius: 30px 10px 10px 10px;
+        } 
+            
+        .minefield, .makeThis {
+            box-shadow: 5px 5px 5px cadetblue;
+            line-height: 0;
+            border-spacing: 0;
+            
+        }
+        .minefield td, .makeThis td {
+             padding: 0;
+        }
+        
+        .clickButton {
+            background-color: powderblue;
+
+            margin: 0px auto;
+            padding: 5px;
+            width: 90px;
+            border-radius: 5px;
+            height: 55px;
+
+        }
+        .difficultyButton {
+                
+            background-color: powderblue;            
+            position: relative;  
+     
+            padding: 3px;
+            width: 120px;
+            border-radius: 5px;
+            margin: 0px auto;
+            min-height: 55px;
+
+        }
+        .difficultyButton:hover {
+            background-color: dodgerblue;
+        }
+
+
+
+    .openMenu {
+        z-index: 3;
+        background-color:dodgerblue;
+        left: 0;
+        top: 0;
+        position: absolute;
+        padding: 10px;
+        border: 0px solid;
+        border-radius: 10px 0px 10px 0px;
+        
+    }
+            
+            h2  {
+                font-size: 120%;
+            }
+button {
+    border: 0px solid; 
+}
