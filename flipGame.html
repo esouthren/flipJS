@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        
+        <style>
+            body {
+                background-color:cornflowerblue;
+            }    
+        .main {
+            background-color: floralwhite;
+            padding: 20px 20px 20px 20px;
+            min-height: 550px;
+            margin: 0px auto;
+            min-width: 370px;
+            height: 50%;
+            width: 30%;
+            font-family: sans-serif;
+            
+        } 
+            
+        .minefield, .makeThis {
+            box-shadow: 5px 5px 5px cadetblue;
+            line-height: 0;
+            border-spacing: 0;
+            
+        }
+        .minefield td, .makeThis td {
+             padding: 0;
+        }
+        
+            .clickButton {
+                background-color: aquamarine;
+                border: 1px solid cadetblue;
+                margin: 0px auto;
+                padding: 5px;
+                width: 90px;
+                border-radius: 10px;
+              
+            }
+        .difficultyButton {
+                
+                background-color: aquamarine;
+                border: 1px solid cadetblue;
+                
+                padding: 5px;
+                width: 120px;
+                border-radius: 10px;
+                margin: 0px auto;
+                
+            
+                color:darkblue;
+        
+                
+            }
+        .difficultyButton:hover {
+            background-color: cadetblue;
+        }
+            
+            h2  {
+                font-size: 120%;
+            }
+        </style>
+        
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+    <script>
+        
+  
+       
+function createMinefield(HEIGHT, LENGTH) {
+    
+    var minefield = {};
+    minefield.rows = [];
+
+    for(var i = 0; i < HEIGHT; i++) {
+        var row = {};
+        row.spots = [];
+        
+
+        for(var j = 0; j < LENGTH; j++) {
+            var spot = {};
+            randBoolean = Math.random() >= 0.5;
+            spot.isCovered = randBoolean;
+            spot.x = j;
+            spot.y = i;
+            
+            row.spots.push(spot);
+            
+        }
+
+        minefield.rows.push(row);
+    }
+    minefield.rows[1].spots[0].isCovered = false;
+    minefield.rows[0].spots[1].isCovered = false;
+    return minefield;
+}
+
+function getSpot(minefield, row, column) {
+    return minefield.rows[column].spots[row];
+}
+
+        
+function calculateNumber(minefield, row, column) {
+    var thisSpot = getSpot(minefield, row, column);
+    
+    // if this spot contains a mine then we can't place a number here
+    if(thisSpot.content == "mine") {
+        return;
+    }
+    
+    var mineCount = 0;
+
+    // check row above if this is not the first row
+    if(row > 0) {
+        // check column to the left if this is not the first column
+        if(column > 0) {
+            // get the spot above and to the left
+            var spot = getSpot(minefield, row - 1, column - 1);
+            if(spot.content == "mine") {
+                mineCount++;
+            }
+        }
+
+        // get the spot right above
+        var spot = getSpot(minefield, row - 1, column);
+        if(spot.content == "mine") {
+            mineCount++;
+        }
+
+        // check column to the right if this is not the last column
+        if(column < 8) {
+            // get the spot above and to the right
+            var spot = getSpot(minefield, row - 1, column + 1);
+            if(spot.content == "mine") {
+                mineCount++;
+            }
+        }
+    }
+
+    // check column to the left if this is not the first column
+    if(column > 0) {
+        // get the spot to the left
+        var spot = getSpot(minefield, row, column - 1);
+        
+        if(spot.content == "mine") {
+            mineCount++;
+        }
+    }
+    
+    // check column to the right if this is not the last column
+    if(column < 8) {
+        // get the spot to the right
+        var spot = getSpot(minefield, row, column + 1);
+        if(spot.content == "mine") {
+            mineCount++;
+        }
+    }
+
+    // check row below if this is not the last row
+    if(row < 8) {
+        // check column to the left if this is not the first column
+        if(column > 0) {
+            // get the spot below and to the left
+            var spot = getSpot(minefield, row + 1, column - 1);
+            if(spot.content == "mine") {
+                mineCount++;
+            }
+        }
+
+        // get the spot right below
+        var spot = getSpot(minefield, row + 1, column);
+        if(spot.content == "mine") {
+            mineCount++;
+        }
+
+        // check column to the right if this is not the last column
+        if(column < 8) {
+            // get the spot below and to the right
+            var spot = getSpot(minefield, row + 1, column + 1);
+            if(spot.content == "mine") {
+                mineCount++;
+            }
+        }
+    }
+    
+    if(mineCount > 0) {
+        thisSpot.content = mineCount;
+    }
+}
+
+
+function MinesweeperController($scope) {
+   
+    $scope.HEIGHT = 3;
+    $scope.LENGTH = 3;
+    $scope.clicks = 0;
+    // toggle controls grid selector visibility
+    $scope.difficultyToggle = false;
+    $scope.newGameToggle = true;
+    
+    $scope.buttonClick = function(length, height) {
+        $scope.HEIGHT = height;
+        $scope.LENGTH = length;
+        $scope.minefield = createMinefield(length, height);
+        $scope.clicks = 0;
+        $scope.difficultyToggle = true;
+        $scope.newGameToggle = false;
+       
+    }
+    
+    $scope.newGame = function() {
+        $scope.difficultyToggle = false;
+        $scope.newGameToggle = true;
+        $scope.winner = "";
+        $scope.minefield = null;
+    }
+   
+
+    
+    $scope.doSouth = function(x,y) {
+        $scope.south = getSpot($scope.minefield, x, (y+1));
+        $scope.south.isCovered = ($scope.south.isCovered) ? false : true;
+    }
+    $scope.doEast = function(x,y) {
+        $scope.east = getSpot($scope.minefield, (x+1), y);
+        $scope.east.isCovered = ($scope.east.isCovered) ? false: true;
+    }
+    $scope.doNorth = function(x,y) {
+        $scope.north = getSpot($scope.minefield, x, (y-1));
+        $scope.north.isCovered = ($scope.north.isCovered) ? false : true;
+    }
+    $scope.doWest = function(x,y) {
+        $scope.west = getSpot($scope.minefield, (x-1), y);
+        $scope.west.isCovered = ($scope.west.isCovered) ? false : true;
+    }
+    
+    $scope.hasWon = function() {
+       
+        allActive = true;
+        allDeactive = true;
+     
+        for (var i = 0; i < $scope.HEIGHT; i++) {
+            for (var j = 0; j < $scope.LENGTH; j++) {
+                thisSpot = getSpot($scope.minefield, j, i);
+                if (thisSpot.isCovered) { 
+                    allDeactive = false;
+                } else if (!thisSpot.isCovered) {
+                    allActive = false;
+                }
+            }
+        }
+        if (allDeactive || allActive) {
+            
+          
+            $scope.winner = "WINNER!";
+        }
+        else { 
+            $scope.winner = "";
+        }
+    }
+    $scope.flip = function(x,y) {
+        
+        $scope.clicks++;
+        $scope.tester = (x + "," + y);
+        
+        // TOP LEFT
+        if (x === 0 && y === 0) {
+            $scope.doEast(x,y);
+            $scope.doSouth(x,y);
+         
+        }
+        
+        // TOP RIGHT
+        else if (x === $scope.LENGTH-1 && y === 0) {
+            $scope.doSouth(x,y);
+            $scope.doWest(x,y);
+            
+        }
+       
+        // BOTTOM LEFT
+        else if (x === 0 && y === $scope.HEIGHT-1) {
+            $scope.doNorth(x,y);
+            $scope.doEast(x,y);
+        }
+        
+        // BOTTOM RIGHT
+        else if (x === $scope.LENGTH-1 && y === $scope.HEIGHT-1) {
+            $scope.doNorth(x,y);
+            $scope.doWest(x,y);
+        }
+        
+        // TOP WALL
+        else if (y === 0 && x > 0 && x < $scope.LENGTH-1) {
+            $scope.doSouth(x,y);
+            $scope.doEast(x,y);
+            $scope.doWest(x,y);
+        }
+        
+        // BOTTOM WALL
+        else if (y === $scope.HEIGHT-1 && x > 0 && x < $scope.LENGTH-1) {
+            $scope.doNorth(x,y);
+            $scope.doEast(x,y);
+            $scope.doWest(x,y);
+        }
+        
+        // RIGHT WALL
+        else if (x === $scope.LENGTH-1 && y > 0 && y < $scope.HEIGHT-1) {
+            $scope.doNorth(x,y);
+            $scope.doSouth(x,y);
+            $scope.doWest(x,y);
+        }
+        else {
+            $scope.doNorth(x,y);
+            $scope.doEast(x,y);
+            $scope.doSouth(x,y);
+            $scope.doWest(x,y); 
+        }
+        
+        // reverse selected spot
+        $scope.spot = getSpot($scope.minefield, x,y);
+        $scope.spot.isCovered = ($scope.spot.isCovered) ? false : true;
+        // check if the gris is in a winning state
+        $scope.hasWon();
+        
+    };
+}    
+
+        </script>
+        
+        
+    </head>
+    
+    <body>    
+        <div class="main" ng-controller="MinesweeperController">
+            <h1>flipJS</h1>  
+          
+            <button class="difficultyButton" ng-click="buttonClick(3,3)" ng-hide="difficultyToggle"><h2>easy</h2></button><br />
+            <button class="difficultyButton" ng-click="buttonClick(5,5)" ng-hide="difficultyToggle"><h2>medium</h2></button><br />
+            <button class="difficultyButton" ng-click="buttonClick(9,9)" ng-hide="difficultyToggle"><h2>difficult</h2></button><br />
+            <button class="difficultyButton" ng-click="buttonClick(15,15)" ng-hide="difficultyToggle"><h2>what are you thinking</h2></button>
+                     
+            <table  class="minefield">
+                <tr ng-repeat="row in minefield.rows">
+                    <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
+                        <img ng-if="spot.isCovered" src="covered.png">
+                        <img ng-if="!spot.isCovered" src="empty.png">
+                    </td>
+                </tr>
+            </table>
+        <br /> 
+        <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
+        <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
+        
+            <button class="clickButton" ng-hide="newGameToggle"><h2>Clicks: {{ clicks }}</h2></button>
+            <button class="difficultyButton" ng-click="newGame()" ng-hide="newGameToggle"><h2>New Game</h2></button>    
+         
+           
+                
+                <br />
+        <h1> {{ winner }} </h1>
+            </h3>
+        </div>
+    </body>
+</html>
