@@ -80,7 +80,7 @@
         .difficultyButton {
                 
             background-color: powderblue;            
-            position: relative;  
+              
      
             padding: 3px;
             width: 120px;
@@ -92,6 +92,11 @@
         .difficultyButton:hover {
             background-color: dodgerblue;
         }
+
+.whiteSpace {
+    width: 100%;
+    height: 8px;
+}
 
 
 
@@ -109,6 +114,7 @@
             
             h2  {
                 font-size: 120%;
+                color: darkblue;
             }
 button {
     border: 0px solid; 

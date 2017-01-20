@@ -313,20 +313,21 @@ function MinesweeperController($scope) {
                 
             <div id="menu" ng-hide="menuToggle"><h2>Colour Scheme</h2>
                 
-                <button style="background-color: coral" class="difficultyButton" ng-click="redScheme()"><h3>Red</h3></button>
-                <button style="background-color: lightblue" class="difficultyButton" ng-click="blueScheme()"><h3>Blue</h3></button>
+                <button style="background-color: coral" class="difficultyButton" ng-click="redScheme()"><h3>Red</h3></button><br />
+                <button style="background-color: lightblue" class="difficultyButton" ng-click="blueScheme()"><h3>Blue</h3></button><br />
                 <button style="background-color: lightgreen" class="difficultyButton" ng-click="greenScheme()"><h3>Green</h3></button>
                 
             </div>
             <!-- <h1><p class="header">flipJS</p></h1> -->
             
             <img src="headerImage.png" align="right"/>
-                
+         <div class="whiteSpace" ng-hide="difficultyToggle" > </div>
+           
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(3,3)"  ng-hide="difficultyToggle"><h2>easy</h2></button><br />
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(5,5)" ng-hide="difficultyToggle"><h2>medium</h2></button><br />
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(9,9)" ng-hide="difficultyToggle"><h2>difficult</h2></button><br />
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(15,15)" ng-hide="difficultyToggle"><h2>what are you thinking</h2></button>
-
+         <br /><br />  
         <table  class="minefield">
             <tr ng-repeat="row in minefield.rows">
                 <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
@@ -335,7 +336,7 @@ function MinesweeperController($scope) {
                 </td>
             </tr>
         </table>
-    <br /> 
+    <br /> <br />
     <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
     <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
 
