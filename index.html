@@ -40,106 +40,22 @@ function getSpot(minefield, row, column) {
     return minefield.rows[column].spots[row];
 }
        
-function calculateNumber(minefield, row, column) {
-    var thisSpot = getSpot(minefield, row, column);
-    
-    // if this spot contains a mine then we can't place a number here
-    if(thisSpot.content == "mine") {
-        return;
-    }
-    
-    var mineCount = 0;
 
-    // check row above if this is not the first row
-    if(row > 0) {
-        // check column to the left if this is not the first column
-        if(column > 0) {
-            // get the spot above and to the left
-            var spot = getSpot(minefield, row - 1, column - 1);
-            if(spot.content == "mine") {
-                mineCount++;
-            }
-        }
-
-        // get the spot right above
-        var spot = getSpot(minefield, row - 1, column);
-        if(spot.content == "mine") {
-            mineCount++;
-        }
-
-        // check column to the right if this is not the last column
-        if(column < 8) {
-            // get the spot above and to the right
-            var spot = getSpot(minefield, row - 1, column + 1);
-            if(spot.content == "mine") {
-                mineCount++;
-            }
-        }
-    }
-
-    // check column to the left if this is not the first column
-    if(column > 0) {
-        // get the spot to the left
-        var spot = getSpot(minefield, row, column - 1);
-        
-        if(spot.content == "mine") {
-            mineCount++;
-        }
-    }
-    
-    // check column to the right if this is not the last column
-    if(column < 8) {
-        // get the spot to the right
-        var spot = getSpot(minefield, row, column + 1);
-        if(spot.content == "mine") {
-            mineCount++;
-        }
-    }
-
-    // check row below if this is not the last row
-    if(row < 8) {
-        // check column to the left if this is not the first column
-        if(column > 0) {
-            // get the spot below and to the left
-            var spot = getSpot(minefield, row + 1, column - 1);
-            if(spot.content == "mine") {
-                mineCount++;
-            }
-        }
-
-        // get the spot right below
-        var spot = getSpot(minefield, row + 1, column);
-        if(spot.content == "mine") {
-            mineCount++;
-        }
-
-        // check column to the right if this is not the last column
-        if(column < 8) {
-            // get the spot below and to the right
-            var spot = getSpot(minefield, row + 1, column + 1);
-            if(spot.content == "mine") {
-                mineCount++;
-            }
-        }
-    }
-    
-    if(mineCount > 0) {
-        thisSpot.content = mineCount;
-    }
-}
       
 function MinesweeperController($scope) {
    
     $scope.coveredImage = "covered.png";
     $scope.emptyImage = "empty.png";
-
+    
+    
     $scope.HEIGHT = 3;
     $scope.LENGTH = 3;
     $scope.clicks = 0;
     // toggle controls grid selector visibility
     $scope.difficultyToggle = false;
+    $scope.welcomeToggle = false;
     $scope.newGameToggle = true;
-    
+    $scope.whiteSpaceToggle = false;
     $scope.menuToggle = true;
     $scope.coverToggle = true;
     
@@ -150,18 +66,34 @@ function MinesweeperController($scope) {
         $scope.clicks = 0;
         $scope.difficultyToggle = true;
         $scope.newGameToggle = false;
+        $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true;
        
     }
     
+    $scope.welcomeClick = function() {
+        $scope.welcomeToggle = ($scope.welcomeToggle) ? false : true;
+        $scope.whiteSpaceToggle =false;
+    }
     $scope.menuButton = function() {
         $scope.menuToggle = ($scope.menuToggle) ? false : true;
         $scope.coverToggle = ($scope.coverToggle) ? false : true; 
+         if (!$scope.welcomeToggle) { $scope.welcomeToggle = true; }
     }
     
     $scope.redScheme = function() {
        $scope.menuButton(); 
         $scope.coveredImage = "redCovered.png";
-        $scope.emptyImage = "redEmpty.png";        
+        $scope.emptyImage = "redEmpty.png"; 
+   
+    }
+    
+    $scope.showSplash = function() {
+        $scope.welcomeToggle = ($scope.welcomeToggle) ? false : true;
+        $scope.menuToggle = ($scope.menuToggle) ? false : true;
+        $scope.coverToggle = ($scope.coverToggle) ? false : true;
+        if ($scope.whiteSpaceToggle = true) {
+            $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true;
+        }
     }
     $scope.greenScheme = function() {
        $scope.menuButton(); 
@@ -179,6 +111,7 @@ function MinesweeperController($scope) {
         $scope.newGameToggle = true;
         $scope.winner = "";
         $scope.minefield = null;
+        $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true;
     }
    
 
@@ -312,31 +245,44 @@ function MinesweeperController($scope) {
             
             <div id="menuBodyCover" ng-hide="coverToggle"></div>
                 
-            <div id="menu" ng-hide="menuToggle"><h2>Colour Scheme</h2>
+            <div id="menu" ng-hide="menuToggle">
+                <br />
+                <button class="instructionButton" ng-click="showSplash()"><h2>Instructions</h2></button>
+                <br /><br /><h2>Colour Scheme</h2>
                 
-                <button style="background-color: coral" class="difficultyButton" ng-click="redScheme()"><h3>Red</h3></button><br />
-                <button style="background-color: lightblue" class="difficultyButton" ng-click="blueScheme()"><h3>Blue</h3></button><br />
-                <button style="background-color: lightgreen" class="difficultyButton" ng-click="greenScheme()"><h3>Green</h3></button>
+                <button class="redButton" ng-click="redScheme()"></button>
+                <button class="blueButton" ng-click="blueScheme()"></button>
+                <button class="greenButton" ng-click="greenScheme()"></button>
+                
                 
             </div>
             <!-- <h1><p class="header">flipJS</p></h1> -->
             
-            <img src="headerImage.png" align="right"/>
-         <div class="whiteSpace" ng-hide="difficultyToggle" > </div>
+        <img src="headerImage.png" align="right"/>
+            
+         <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
            
+            <div class="welcome" ng-hide="welcomeToggle">
+                <img src="splashImage.png"><br /><br />
+                <button class="difficultyButton" ng-click="welcomeClick()"><h2>Get Started</h2> </button></div>
+            
+            <div id="menuBodyCover" ng-hide="coverToggle"></div>
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(3,3)"  ng-hide="difficultyToggle"><h2>easy</h2></button><br />
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(5,5)" ng-hide="difficultyToggle"><h2>medium</h2></button><br />
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(9,9)" ng-hide="difficultyToggle"><h2>difficult</h2></button><br />
         <button class="difficultyButton" style="top: 70px;" ng-click="buttonClick(15,15)" ng-hide="difficultyToggle"><h2>what are you thinking</h2></button>
-         <br /><br />  
-        <table  class="minefield">
+         <br /><br />
+            
+        
+        <table  class="minefield" >
             <tr ng-repeat="row in minefield.rows">
                 <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
                     <img ng-if="spot.isCovered" src="{{ coveredImage }}">
                     <img ng-if="!spot.isCovered" src="{{ emptyImage }}">
                 </td>
             </tr>
-        </table>
+        
+            </table>
     <br /> <br />
     <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
     <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>

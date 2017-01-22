@@ -23,6 +23,21 @@
         border-radius: 10px;
         border: 2px black;
     }
+
+.welcome {
+       background-color: floralwhite;
+        padding: 20px 20px 20px 20px;
+        position: absolute;
+        border: 0;
+        min-width: 250px;
+        height: 70%;
+    min-height: 200px;
+        width: 25%;
+        font-family: sans-serif;
+    z-index: 0;
+        
+    
+}
 .header {
     font-size: 200%;
     text-align: right; 
@@ -48,28 +63,28 @@
         #main {
             background-color: floralwhite;
             padding: 20px 20px 20px 20px;
-            min-height: 550px;
+            
             border: 0;
             min-width: 370px;
-            height: 50%;
+            
             width: 30%;
             font-family: sans-serif;
             border-radius: 30px 10px 10px 10px;
         } 
             
-        .minefield, .makeThis {
-            box-shadow: 5px 5px 5px cadetblue;
+        .minefield {
+            border: 1px solid slategrey;
             line-height: 0;
             border-spacing: 0;
             
         }
-        .minefield td, .makeThis td {
+        .minefield td {
              padding: 0;
         }
         
         .clickButton {
             background-color: powderblue;
-
+            z-index: 4;
             margin: 0px auto;
             padding: 5px;
             width: 90px;
@@ -77,11 +92,8 @@
             height: 55px;
 
         }
-        .difficultyButton {
-                
-            background-color: powderblue;            
-              
-     
+        .difficultyButton { 
+            background-color: powderblue;          
             padding: 3px;
             width: 120px;
             border-radius: 5px;
@@ -90,12 +102,59 @@
 
         }
         .difficultyButton:hover {
-            background-color: dodgerblue;
+            background-color: skyblue; 
+        }
+        .instructionButton { 
+            background-color: powderblue;          
+            padding: 3px;
+            width: 120px;
+            border-radius: 5px;
+            margin: 0px auto;
+            min-height: 55px;
+
+        }
+        .instructionButton:hover {
+            background-color: skyblue; 
         }
 
-.whiteSpace {
-    width: 100%;
-    height: 8px;
+    .whiteSpace {
+        width: 100%;
+        height: 70px;
+       
+    }
+
+.redButton  {
+    background-color: red;
+    padding: 3px;
+    width: 40px;
+    border-radius: 5px;
+    margin: 0px auto;
+    min-height: 35px;
+}
+    .redButton:hover {
+    background-color: firebrick;
+}
+.blueButton  {
+    background-color: deepskyblue;
+    padding: 3px;
+    width: 40px;
+    border-radius: 5px;
+    margin: 0px auto;
+    min-height: 35px;
+}
+    .blueButton:hover {
+    background-color: darkblue;
+}
+.greenButton  {
+    background-color: lightgreen;
+    padding: 3px;
+    width: 40px;
+    border-radius: 5px;
+    margin: 0px auto;
+    min-height: 35px;
+}
+    .greenButton:hover {
+    background-color: forestgreen;
 }
 
 
@@ -112,10 +171,11 @@
         
     }
             
-            h2  {
-                font-size: 120%;
-                color: darkblue;
-            }
-button {
-    border: 0px solid; 
-}
+        h2  {
+            font-size: 120%;
+            color: darkblue;
+        }
+    button {
+        border: 0px solid; 
+    }
+
