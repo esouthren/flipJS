@@ -19,19 +19,26 @@ body {
     padding-top: 50px;
     border-radius: 10px;
     border: 2px black;
+    min-height: 60%;
 }
 
 .welcome {
    background-color: floralwhite;
     padding: 20px 20px 20px 20px;
-    position: absolute;
+    position: relative;
     border: 0;
-    min-width: 250px;
+  
     height: 70%;
     min-height: 200px;
-    width: 25%;
+   
     font-family: sans-serif;
-    z-index: 0;        
+    z-index: 0;       
+    
+}
+
+.instructionImage {
+    width: 100%;
+    position: relative;
     
 }
 .header {
