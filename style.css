@@ -1,7 +1,7 @@
 @media only screen and (max-device-width: 750px)  {
   #main {
-    width: 90% !important;
-      background-color: red !important;
+    width: 50% !important;
+      background-color: skyblue !important;
   }
 }
 
