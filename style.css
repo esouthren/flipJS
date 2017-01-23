@@ -1,6 +1,6 @@
-@media only screen and (max-width: 500px)  {
+@media only screen and (max-device-width: 750px)  {
   #main {
-    width: 95% !important;
+    width: 90% !important;
       background-color: red !important;
   }
 }
