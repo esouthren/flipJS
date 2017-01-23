@@ -1,7 +1,7 @@
 @media only screen and (max-device-width: 750px)  {
   
   body {
-    background-color: floralwhite;
+    background-color: floralwhite !important;
   }
   #main {
     width: 50% !important;
