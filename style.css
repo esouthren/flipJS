@@ -5,7 +5,7 @@
   }
   #main {
     width: 50% !important;
-        background-color: green;
+        background-color: green !important;
         right: 30px;
   }
     .instructionImage {
