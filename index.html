@@ -4,65 +4,64 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <script type="text/javascript" src="angular.js"></script>
        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script> -->
-    <script>
         
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>        
   
        
-function createMinefield(HEIGHT, LENGTH) {
-    
-    var minefield = {};
-    minefield.rows = [];
+    function createMinefield(HEIGHT, LENGTH) {
 
-    for(var i = 0; i < HEIGHT; i++) {
-        var row = {};
-        row.spots = [];
-        
+        var minefield = {};
+        minefield.rows = [];
 
-        for(var j = 0; j < LENGTH; j++) {
-            var spot = {};
-            randBoolean = Math.random() >= 0.5;
-            spot.isCovered = randBoolean;
-            spot.x = j;
-            spot.y = i;
-            
-            row.spots.push(spot);
-            
+        for(var i = 0; i < HEIGHT; i++) {
+            var row = {};
+            row.spots = [];
+
+
+            for(var j = 0; j < LENGTH; j++) {
+                var spot = {};
+                randBoolean = Math.random() >= 0.5;
+                spot.isCovered = randBoolean;
+                spot.x = j;
+                spot.y = i;
+
+                row.spots.push(spot);
+
+            }
+
+            minefield.rows.push(row);
         }
-
-        minefield.rows.push(row);
+        minefield.rows[1].spots[0].isCovered = false;
+        minefield.rows[0].spots[1].isCovered = false;
+        return minefield;
     }
-    minefield.rows[1].spots[0].isCovered = false;
-    minefield.rows[0].spots[1].isCovered = false;
-    return minefield;
-}
 
-function getSpot(minefield, row, column) {
+    function getSpot(minefield, row, column) {
     return minefield.rows[column].spots[row];
-}
-       
+}      
 
-      
-function MinesweeperController($scope) {
-   
-    $scope.coveredImage = "covered.png";
-    $scope.emptyImage = "empty.png";
-    $scope.squareSize = 30;
-    
-    $scope.HEIGHT = 3;
-    $scope.LENGTH = 3;
-    $scope.clicks = 0;
-    // toggle controls grid selector visibility
-    $scope.difficultyToggle = true;
-    $scope.welcomeToggle = false;
-    $scope.newGameToggle = true;
-    $scope.whiteSpaceToggle = false;
-    $scope.menuToggle = true;
-    $scope.coverToggle = true;
-    $scope.gridToggle = false;
-    $scope.instructionButtonText = "Get Started";
-    $scope.gameActive = false;
-    
-    $scope.difficultyButton = function(length, height, squareSize) {
+    function MinesweeperController($scope) {
+
+        $scope.coveredImage = "covered.png";
+        $scope.emptyImage = "empty.png";
+        $scope.squareSize = 30;
+
+        $scope.HEIGHT = 3;
+        $scope.LENGTH = 3;
+        $scope.clicks = 0;
+        // toggle controls grid selector visibility
+        $scope.difficultyToggle = true;
+        $scope.welcomeToggle = false;
+        $scope.newGameToggle = true;
+        $scope.whiteSpaceToggle = false;
+        $scope.menuToggle = true;
+
+        $scope.gridToggle = false;
+        $scope.instructionButtonText = "Get Started";
+        $scope.gameActive = false;
+
+        $scope.difficultyButton = function(length, height, squareSize) {
         $scope.HEIGHT = height;
         $scope.LENGTH = length;
         $scope.minefield = createMinefield(length, height);
@@ -76,12 +75,12 @@ function MinesweeperController($scope) {
     }
     
     $scope.getStartedButton = function() {
+        
         $scope.welcomeToggle = true;
         
         // if game is not currently happening
         if (!$scope.gameActive) {
-            $scope.difficultyToggle = false;
-            
+            $scope.difficultyToggle = false;            
         }
         
         else {
@@ -93,21 +92,18 @@ function MinesweeperController($scope) {
         }
         //$scope.setLayout();
     }
+    
     $scope.menuButton = function() {
         $scope.menuToggle = ($scope.menuToggle) ? false : true;
-        $scope.coverToggle = ($scope.coverToggle) ? false : true; 
-         if (!$scope.welcomeToggle) { $scope.welcomeToggle = true; }
+        
     }
     
     $scope.redScheme = function() {
-       $scope.menuButton(); 
+        $scope.menuButton(); 
         $scope.coveredImage = "redCovered.png";
-        $scope.emptyImage = "redEmpty.png"; 
+        $scope.emptyImage = "redEmpty.png";    
+    }  
    
-    }
-    
-    $scope.gameActive = false;
-    
     $scope.setLayout = function() {
         $scope.whiteSpaceToggle = true;
         
@@ -125,29 +121,17 @@ function MinesweeperController($scope) {
             $scope.newGameToggle = false;
         }
     }
-    /*
-    $scope.instructionButton = function() {
-        if ($scope.welcomeToggle) {
-            $scope.welcomeToggle = false;
-        }
-        $scope.difficultyToggle = true;
-        $scope.menuToggle = ($scope.menuToggle) ? false : true;
-        $scope.coverToggle = ($scope.coverToggle) ? false : true;
-        $scope.gameActive = true;
-        if ($scope.whiteSpaceToggle = true) {
-            $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true;
-        }
-    }
-    */
+  
     $scope.instructionButton = function() {
         
         $scope.menuToggle = ($scope.menuToggle) ? false : true;
-        $scope.coverToggle = ($scope.coverToggle) ? false : true;
+       
         $scope.welcomeToggle = false;
         
         if ($scope.gameActive) {
             $scope.gridToggle = true;
             $scope.instructionButtonText = "Return to Game";
+            $scope.whiteSpaceToggle = false;
         }
         else {
             $scope.difficultyToggle = true;
@@ -155,6 +139,7 @@ function MinesweeperController($scope) {
             $scope.instructionButtonText = "Get Started";
         }
     }
+    
     $scope.greenScheme = function() {
         $scope.menuButton(); 
         $scope.coveredImage = "greenCovered.png";
@@ -173,6 +158,7 @@ function MinesweeperController($scope) {
         $scope.winner = "";
         $scope.minefield = null;
         $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true; */
+        $scope.menuToggle = true;
         $scope.gameActive = false;
         $scope.setLayout();
     }
@@ -292,44 +278,43 @@ function MinesweeperController($scope) {
     };
 }    
 
-        </script>
-        
+    </script>
         
     </head>
     
     <body>
         
-        
         <div id="main" ng-controller="MinesweeperController">
             
             <button class="openMenu" ng-click="menuButton()" ><img src="cog.png" height=30 width=30/></button>
             
-            <div id="menuBodyCover" ng-hide="coverToggle"></div>
-                
             <div id="menu" ng-hide="menuToggle">
-                <br />
-                <button class="instructionButton" ng-click="instructionButton()"><h2>Instructions</h2></button>
-                <br /><br /><h2>Colour Scheme</h2>
                 
-                <button class="redButton" ng-click="redScheme()"></button>
-                <button class="blueButton" ng-click="blueScheme()"></button>
-                <button class="greenButton" ng-click="greenScheme()"></button>
-                
-                
-            </div>
+            <h2>Colour Scheme</h2>
+
+            <button class="redButton" ng-click="redScheme()"></button>
+            <button class="blueButton" ng-click="blueScheme()"></button>
+            <button class="greenButton" ng-click="greenScheme()"></button>
+            <br /><br /><br />
+            <button class="instructionButton" ng-click="instructionButton()"><h2>Instructions</h2></button>
+            <br /><br />
+            <button class="instructionButton" ng-click="newGame()"><h2>New Game</h2></button>
+
+            <br /><br />                   
+            </div>           
             
+            <img src="headerImage.png" align="right"/>
             
-        <img src="headerImage.png" align="right"/>
-            
-         <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
+            <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
            
             <div class="welcome" ng-hide="welcomeToggle">
                 <img src="splashImage.png"><br />
                 <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
-                <button class="newGameButton" ng-click="getStartedButton()"><h2>{{ instructionButtonText }}</h2>        </button></div>
+                <button class="instructionButton" ng-click="getStartedButton()"><h2>{{ instructionButtonText }}</h2>        </button>
+            </div>
             
-            <div id="menuBodyCover" ng-hide="coverToggle"></div>
-            
+            <div id="menuBodyCover" ng-hide="menuToggle"></div>
+            <div class="whiteSpace" ng-hide="difficultyToggle" > </div>
             <table class="difficultyGrid"><tr><td>
                 <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(3,3,117)"  ng-hide="difficultyToggle"><h2>easy</h2></button></td>
                 <td>
@@ -338,36 +323,28 @@ function MinesweeperController($scope) {
                 <tr><td>
                     <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(7,7,50)" ng-hide="difficultyToggle"><h2>difficult</h2></button></td>
                     <td>
-                        <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(10,10,35)" ng-hide="difficultyToggle"><h2>what are <br />you thinking</h2></button></td></tr></table>
-         
+                        <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(10,10,35)" ng-hide="difficultyToggle"><h2>what are <br />you thinking</h2></button></td></tr>
+            </table>       
             
-        
-        <table  class="minefield" ng-hide="gridToggle">
-            <tr ng-repeat="row in minefield.rows">
-                <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
-                    <img ng-if="spot.isCovered" src="{{ coveredImage }}" width="{{ squareSize }}">
-                    <img ng-if="!spot.isCovered" src="{{ emptyImage }}" width="{{ squareSize }}">
-                </td>
-            </tr>
-        
+            <table  class="minefield" ng-hide="gridToggle">
+                <tr ng-repeat="row in minefield.rows">
+                    <td ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
+                        <img ng-if="spot.isCovered" src="{{ coveredImage }}" width="{{ squareSize }}">
+                        <img ng-if="!spot.isCovered" src="{{ emptyImage }}" width="{{ squareSize }}">
+                    </td>
+                </tr>
             </table>
-    <br /> <br />
-    <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
-    <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
+            
+            <br /> <br />
+            <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
+            <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
 
-        <button class="clickButton" ng-hide="newGameToggle"><h2>Clicks: {{ clicks }}</h2></button>
-        <button class="newGameButton" ng-click="newGame()" ng-hide="newGameToggle"><h2>New Game</h2></button> 
-        <br />
+            <button class="clickButton" ng-hide="newGameToggle"><h2>Clicks: {{ clicks }}</h2></button>
+        
+            <br /><br />
+            <h1> {{ winner }} </h1>          
             
-            
-         
            
-                
-                <br />
-        <h1> {{ winner }} </h1>
-            
-            
-            </h3>
         </div>
     </body>
 </html>
