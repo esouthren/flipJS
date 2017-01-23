@@ -5,10 +5,14 @@
   }
   #main {
        width: 95% !important;
-        background-color: floralwhite !important;
-        
+       background-color: floralwhite !important;       
   }
-
+  
+  #menu {
+    position: fixed !important;
+    border-radius: 0px 0px 10px 0px;
+  }
+  
   .openMenu {
     position: fixed !important;
 
