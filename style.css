@@ -5,7 +5,7 @@
   }
   #main {
     width: 50% !important;
-        background-color: green !important;
+        background-color: floralwhite !important;
         right: 30px !important;
   }
     .instructionImage {
@@ -13,6 +13,10 @@
         position: relative;
     
 }
+  .openMenu {
+    position: fixed !important;
+
+    border-radius: 0px 0px 10px 0px;
 }
 
 body {
