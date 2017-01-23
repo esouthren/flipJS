@@ -76,7 +76,7 @@ body {
     border: 0;
     min-width: 370px;
     min-height: 500px;
- 
+    width: 40%;
     font-family: sans-serif;
     border-radius: 30px 10px 10px 10px;
     } 
