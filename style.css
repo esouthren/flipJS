@@ -5,7 +5,8 @@
   }
   #main {
        width: 95% !important;
-       background-color: floralwhite !important;       
+       background-color: floralwhite !important;
+        padding: 10px 5px 10px 5px !important;
   }
   
   #menu {
