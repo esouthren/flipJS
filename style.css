@@ -1,7 +1,11 @@
 @media only screen and (max-device-width: 750px)  {
+  
+  body {
+    background-color: floralwhite;
+  }
   #main {
     width: 50% !important;
-        background-color: red !important;
+        background-color: green;
         right: 30px;
   }
     .instructionImage {
