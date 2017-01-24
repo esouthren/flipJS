@@ -27,7 +27,7 @@ body {
     }  
 
 #menu {
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     left: 0;
     right: 0;
@@ -74,6 +74,7 @@ body {
 }
 
 #menuBodyCover {
+    z-index: 1;
     min-width: 100%;
     min-height: 100%;
     background-color: darkblue;
@@ -87,7 +88,7 @@ body {
         
 #main {
     background-color: floralwhite;
-    padding: 20px 10px 20px 20px;
+    padding: 20px 20px 20px 20px;
     border: 0;
    
     min-height: 500px;
@@ -105,14 +106,47 @@ body {
     }
 
 .minefield {
-    border: 1px solid slategrey;
+    z-index: 0;
+    border: 5px solid slategrey;
     line-height: 0;
     border-spacing: 0;
+    width: 100%;
     }
 
-.minefield td {
+.minefieldSmallTd  {
     padding: 0;
+    width: 33.33%;
+    padding-bottom: 33.33%;
+    position: relative;
     }
+
+
+.minefieldMediumTd {
+    padding: 0;
+    width: 20%;
+    padding-bottom: 20%;
+    position: relative;
+    }
+
+
+.minefieldDifficultTd {
+    padding: 0;
+    width: 14.28%;
+    padding-bottom: 14.28%;
+    position: relative;
+    }
+
+.minefieldHecticTd {
+    padding: 0;
+    width: 10%;
+    padding-bottom: 10%;
+    position: relative;
+    }
+.gridTile {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
 
 .animate-show-hide.ng-hide {
   opacity: 0;
