@@ -4,8 +4,9 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <script type="text/javascript" src="angular.js"></script>
        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script> -->
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="angularAnimate.js"></script>
         <script>        
   
        
@@ -57,8 +58,8 @@
         $scope.newGameToggle = true;
         $scope.whiteSpaceToggle = false;
         $scope.menuToggle = true;
-
-        $scope.gridToggle = false;
+        $scope.winToggle = true;
+        $scope.gridToggle = true;
         $scope.instructionButtonText = "Get Started";
         $scope.gameActive = false;
         $scope.minefieldClass = "minefieldSmallTd";
@@ -92,6 +93,9 @@
             }
     }
     
+    $scope.shortcutWin = function() {
+        $scope.winToggle = false;
+    }
         
     $scope.getStartedButton = function() {
         
@@ -177,9 +181,13 @@
         $scope.winner = "";
         $scope.minefield = null;
         $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true; */
+        
         $scope.menuToggle = true;
         $scope.gameActive = false;
         $scope.setLayout();
+        if (!$scope.winToggle) {
+            $scope.winToggle = true;
+        }
     }
    
     $scope.doSouth = function(x,y) {
@@ -301,10 +309,15 @@
         
     </head>
     
-    <body>
+    <body ng-app="ngAnimate">
+        
+        <h1>Hide the DIV: <input type="checkbox" ng-model="myCheck"></h1>
+
+<div class="blue" ng-hide="myCheck"></div>
         
         <div id="main" ng-controller="MinesweeperController">
             
+            <div class="winSplash animate-show-hide" ng-hide="winToggle"><button class="instructionButton" ng-click="newGame()"><h2>New Game</h2></button></div>
             <button class="openMenu" ng-click="menuButton()" ><img src="cog.png" height=30 width=30/></button>
             
             <div id="menu" ng-hide="menuToggle">
@@ -332,7 +345,8 @@
                 <button class="instructionButton" ng-click="getStartedButton()"><h2>{{ instructionButtonText }}</h2>        </button>
             </div>
             
-            <div id="menuBodyCover" ng-hide="menuToggle"></div>
+            <div id="menuBodyCover" ng-click="menuButton()" ng-hide="menuToggle"></div>
+            
             <div class="whiteSpace" ng-hide="difficultyToggle" > </div>
             <table class="difficultyGrid"><tr><td>
                 <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(3,3,117)"  ng-hide="difficultyToggle"><h2>easy</h2></button></td>
@@ -358,12 +372,13 @@
             <h3 ng-if="isWinMessageVisible">Winner winner!</h3>
             <h3 ng-if="hasLostMessageVisible">You Lost :(</h3>
 
-            <button class="clickButton" ng-hide="newGameToggle"><h2>Clicks: {{ clicks }}</h2></button>
-        
+            <button class="clickButton" ng-hide="gridToggle"><h2>Clicks: {{ clicks }}</h2></button>
+            <button class="difficultyButton" ng-click="shortcutWin()"><h2>Winnar</h2></button>
             <br /><br />
             <h1> {{ winner }} </h1>          
             
            
         </div>
+
     </body>
 </html>
