@@ -7,19 +7,6 @@
     to { width: 20%; }
 }
 
-.aniTest {
-    background-color: red;
-    animation-name: slideIn;
-    animation-duration: 0.5s;
-    width: 100%;
-}
-
-.aniTest2 {
-    background-color: blue;
-    animation-name: slideOut;
-    animation-duration: 0.5;
-}
-
 
 @media only screen and (max-device-width: 750px)  {
   
@@ -34,11 +21,13 @@
   
   #menu {
     position: fixed !important;
+      width: 70% !important;
     border-radius: 0px 0px 10px 0px !important;
   }
   
   .openMenu {
     position: fixed !important;
+      width: 20% !important;
     border-radius: 0px 0px 10px 0px !important;
   }
 }
