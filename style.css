@@ -33,7 +33,7 @@
     
     @keyframes slideIn {
     from { width: 0% }
-    to { width: 80%; }
+    to { width: 80% !important; }
 }
 }
 
