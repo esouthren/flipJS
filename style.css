@@ -1,6 +1,6 @@
-@keyframes slideOut {
-    from { width: 20% }
-    to { width: 0%; }
+@keyframes slideInMobile {
+    from { width: 0% }
+    to { width: 80%; }
 }
 @keyframes slideIn {
     from { width: 0% }
@@ -21,7 +21,8 @@
   
   #menu {
     position: fixed !important;
-     
+    animation-name: slideInMobile !important;
+    animation-duration: 0.5s !important; 
     border-radius: 0px 0px 10px 0px !important;
   }
   
