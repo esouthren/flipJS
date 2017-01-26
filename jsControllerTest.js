@@ -21,7 +21,8 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
     $scope.instructionButtonText = "Get Started";
     $scope.gameActive = false;
     $scope.minefieldClass = "minefieldSmallTd";
-
+    $scope.difficulty = "shmoop";
+    $scope.winMessage = "dslkfjgh";
     $scope.menuClass = "menu";
   
     
@@ -43,19 +44,27 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
             $scope.gridStyle = "width: {{ ($scope.HEIGHT)*100 }}";
             if (length === 3) {
                 $scope.minefieldClass = "minefieldSmallTd";
+                $scope.difficulty = "Easy";
+                $scope.winMessage = "> Keep trying kiddo.";
             }
             else if (length === 5) {
                 $scope.minefieldClass = "minefieldMediumTd";
+                $scope.difficulty = "Medium";
+                $scope.winMessage = "> Now you're getting somewhere!";
             }
             else if (length === 7) {
                 $scope.minefieldClass = "minefieldDifficultTd";
+                $scope.difficulty = "Difficult";
+                $scope.winMessage = "> Hardcore! Well done.";
             }
             else if (length === 10) {
                 $scope.minefieldClass = "minefieldHecticTd";
+                $scope.difficulty = "Legendary";
+                $scope.winMessage = "YOU LEGEND!";
             }
     }
     
-    $scope.shortcutWin = function() {
+    $scope.winShortcut = function() {
         $scope.winToggle = false;
     }
         
@@ -100,7 +109,8 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
    
     $scope.setLayout = function() {
         $scope.whiteSpaceToggle = true;
-        
+       
+       
         // if there is not a current game
         if (!$scope.gameActive) {
             $scope.difficultyToggle = false;
@@ -152,16 +162,14 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
         $scope.winner = "";
         $scope.minefield = null;
         $scope.whiteSpaceToggle = ($scope.whiteSpaceToggle) ? false : true; */
-        
+        $scope.welcomeToggle = true;
         $scope.menuToggle = true;
         $scope.gameActive = false;
         $scope.setLayout();
-        if (!$scope.winToggle) {
-            $scope.winToggle = true;
-        }
-        if (!$scope.welcomeToggle) {
-            $scope.welcomeToggle = true;
-        }
+        if (!$scope.winToggle) { $scope.winToggle = true; }
+
+
+        
     }
    
     $scope.doSouth = function(x,y) {
@@ -199,7 +207,8 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
         if (allDeactive || allActive) {
             
           
-            $scope.winner = "WINNER!";
+  
+            $scope.winToggle = false;
         }
         else { 
             $scope.winner = "";

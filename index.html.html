@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+    <link rel="stylesheet" type="text/css" href="styleTest.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+        
+    <script src="jsControllerTest.js"></script>    
+    </head>
+    
+   
+
+<body>
+
+<div ng-app="myApp" ng-controller="MinesweeperController"> 
+
+    
+    <div id="winning" ng-hide="winToggle">
+        <br /><br />
+        <center>
+        <h1>WINNER!</h1>
+        <br />
+        <h2>Difficulty: {{ difficulty }}
+            <br /><br />
+            Clicks: {{ clicks }}
+        <br /><br />
+            {{ winMessage }} </h2></center><br /><br />
+        <button class="instructionButton" ng-click="newGame()"><h2>Play Again</h2></button>
+        
+     </div> 
+    
+ <div id="main">
+     <button class="openMenu" ng-click="menuButton()" ><img src="cog.png" height=30 width=30/></button>
+            
+     <!-- MENU BITS -->
+            <div id="menu" ng-hide="menuToggle">
+                
+            <h2>Colour Scheme</h2>
+
+            <button class="redButton" ng-click="redScheme()"></button>
+            <button class="blueButton" ng-click="blueScheme()"></button>
+            <button class="greenButton" ng-click="greenScheme()"></button>
+            <br /><br /><br />
+            <button class="instructionButton" ng-click="instructionButton()"><h2>Instructions</h2></button>
+            <br /><br />
+            <button class="instructionButton" ng-click="newGame()"><h2>New Game</h2></button>
+                
+                
+
+<div class="blue" ng-hide="myCheck"></div>
+                
+            <br /><br />                   
+            </div> 
+     
+     <img src="headerImage.png" align="right"/>
+            
+            <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
+           
+            <div class="welcome" ng-hide="welcomeToggle">
+                <img src="splashImage.png" class="instructionImage"><br />
+                <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
+                <button class="instructionButton" ng-click="getStartedButton()"><h2>{{ instructionButtonText }}</h2>        </button>
+            </div>
+            
+            <div id="menuBodyCover" ng-click="menuButton()" ng-hide="menuToggle"></div>
+            
+            
+            
+            
+            
+            
+            <div class="whiteSpace" ng-hide="difficultyToggle" > </div>
+            <table class="difficultyGrid"><tr><td>
+                <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(3,3,117)"  ng-hide="difficultyToggle"><h2>easy</h2></button></td>
+                <td>
+                    <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(5,5,70)" ng-hide="difficultyToggle" align="right"><h2>medium</h2></button></td>
+                </tr>
+                <tr><td>
+                    <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(7,7,50)" ng-hide="difficultyToggle"><h2>difficult</h2></button></td>
+                    <td>
+                        <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(10,10,35)" ng-hide="difficultyToggle"><h2>what are <br />you thinking</h2></button></td></tr>
+            </table>       
+            
+            <table class="minefield" ng-hide="gridToggle">
+                <tr ng-repeat="row in minefield.rows">
+                    <td class="{{ minefieldClass }}" ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
+                        <div ng-show="!spot.isCovered">
+                            <img class="gridTile" src="{{ emptyImage }}" ></div>
+                        <div ng-show="spot.isCovered">
+                        <img class="gridTile" src="{{ coveredImage }}" >
+                        </div>
+                    </td>
+                </tr>
+            </table><br /><br />
+            
+     
+
+            <button class="clickButton" ng-hide="gridToggle"><h2>Clicks: {{ clicks }}</h2></button>
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
