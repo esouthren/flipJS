@@ -45,7 +45,7 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
             if (length === 3) {
                 $scope.minefieldClass = "minefieldSmallTd";
                 $scope.difficulty = "Easy";
-                $scope.winMessage = "> Hey Alex! Nice one. See you soon. <3";
+                $scope.winMessage = "> Getting there! Why not try Medium?";
             }
             else if (length === 5) {
                 $scope.minefieldClass = "minefieldMediumTd";
