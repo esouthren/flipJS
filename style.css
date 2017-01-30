@@ -23,29 +23,22 @@
         padding: 10px 5px 10px 5px !important;
   }
   #winning {
-    width: 95% !important;
+    width: 100% !important;
     border-radius: 0px !important;
+    position: fixed !important;
   }
   
   #menu {
     position: fixed !important;
-    animation-name: slideInMobile !important;
-    animation-duration: 0.5s !important; 
     border-radius: 0px 0px 10px 0px !important;
-    
-      width: 80% !important;
+    width: 80% !important;
   }
   
   .openMenu {
     position: fixed !important;
-    
     border-radius: 0px 0px 10px 0px !important;
   }
-    
-    @keyframes slideIn {
-    from { width: 0% }
-    to { width: 80% !important; }
-}
+
 }
 
 body {
@@ -108,16 +101,14 @@ body {
 
 .instructionImage {
     width: 100%;
-    position: relative;
-    
+    position: relative;    
 }
+
 .header {
     font-size: 200%;
     text-align: right; 
     position: relative;
 }
-
-
 
 #menuBodyCover {
     z-index: 1;
@@ -133,17 +124,14 @@ body {
     }
 
 .winSplash {
-transition: all linear 0.5s;
+  transition: all linear 0.5s;
   background-color: red;
   height: 300px;
   width: 40%;
-  position: fixed;
-    
+  position: fixed;  
   top: 0;
   left: 0;
-    }
-
-
+}
 
 #main {
     background-color: floralwhite;
@@ -151,7 +139,6 @@ transition: all linear 0.5s;
     border: 0;
     min-height: 500px;
     width: 40%;
-   
     border-radius: 30px 10px 10px 10px;
     } 
         
@@ -200,6 +187,7 @@ transition: all linear 0.5s;
     padding-bottom: 10%;
     position: relative;
     }
+
 .gridTile {
     width: 100%;
     height: 100%;
@@ -270,9 +258,11 @@ transition: all linear 0.5s;
     margin: 0px auto;
     min-height: 35px;
     }
-    .redButton:hover {
+
+.redButton:hover {
     background-color: firebrick;
     }
+
 .blueButton  {
     background-color: deepskyblue;
     padding: 3px;
@@ -281,9 +271,11 @@ transition: all linear 0.5s;
     margin: 0px auto;
     min-height: 35px;
     }
-    .blueButton:hover {
+
+.blueButton:hover {
     background-color: darkblue;
     }
+
 .greenButton  {
     background-color: lightgreen;
     padding: 3px;
@@ -292,11 +284,12 @@ transition: all linear 0.5s;
     margin: 0px auto;
     min-height: 35px;
     }
-    .greenButton:hover {
+
+.greenButton:hover {
     background-color: forestgreen;
     }
 
-    .openMenu {
+.openMenu {
     z-index: 3;
     background-color:dodgerblue;
     left: 0;
@@ -307,17 +300,17 @@ transition: all linear 0.5s;
     border-radius: 10px 0px 10px 0px;
     }
             
-    h2  {
-        font-size: 120%;
-        color: darkblue;
+h2  {
+    font-size: 120%;
+    color: darkblue;
     }
+
 h1 {
     font-size: 200%;
-    color: darkblue;
-    
+    color: darkblue;    
 }
 
-    button {
-        border: 0px solid; 
+button {
+     border: 0px solid; 
     }
 
