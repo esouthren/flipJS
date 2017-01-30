@@ -31,7 +31,7 @@
      </div> 
     
  <div id="main">
-     <button class="openMenu" ng-click="menuButton()" ><img src="cog.png" height=30 width=30/></button>
+     <button class="openMenu" ng-click="menuButton()" ><img src="images/cog.png" height=30 width=30/></button>
             
      <!-- MENU BITS -->
             <div id="menu" ng-hide="menuToggle">
@@ -53,12 +53,12 @@
             <br /><br />                   
             </div> 
      
-     <img src="headerImage.png" align="right"/>
+     <img src="images/headerImage.png" align="right"/>
             
             <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
            
             <div class="welcome" ng-hide="welcomeToggle">
-                <img src="splashImage.png" class="instructionImage"><br />
+                <img src="images/splashImage.png" class="instructionImage"><br />
                 <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
                 <button class="instructionButton" ng-click="getStartedButton()"><h2>{{ instructionButtonText }}</h2>        </button>
             </div>
@@ -86,9 +86,9 @@
                 <tr ng-repeat="row in minefield.rows">
                     <td class="{{ minefieldClass }}" ng-repeat="spot in row.spots" ng-click="flip(spot.x, spot.y)">
                         <div ng-show="!spot.isCovered">
-                            <img class="gridTile" src="{{ emptyImage }}" ></div>
+                            <img class="gridTile" src="images/{{ emptyImage }}" ></div>
                         <div ng-show="spot.isCovered">
-                        <img class="gridTile" src="{{ coveredImage }}" >
+                        <img class="gridTile" src="images/{{ coveredImage }}" >
                         </div>
                     </td>
                 </tr>
