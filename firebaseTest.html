@@ -16,28 +16,24 @@
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-    <script src="jsController.js"></script>    
+        <script>
+         var database = firebase.database();
+      function writeData(name) {
+       firebase.database().ref().set({
+        testName: name 
+       });
+      }
+     </script>
     
     </head>
     <body>
     Databse data retrieval Test
     <br /><br />
      <p id="data"></p>
-    <script>
+
     
-    ref.on("value", function(snapshot) {
-    for (x in snapshot.val()) {
-        var xRef = new Firebase("https://flipjs-71ead.firebaseio.com/"+x+"/");
-        xRef.once("value", function(xsnapshot) {
-            var data = xsnapshot.val();
-            var name = data["myString"];
-            console.log(name);
-         document.getElementByID("data").innerHTML = name;
-        });
-    }
-});
-     
-     </script>
+    <button class="instructionButton" ng-click="writeData('Written!!')"><h2>Add Data to DB</h2></button>
+ 
  </body>
 </html>
     
