@@ -18,9 +18,9 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">     
         <script>
          var database = firebase.database();
-      function writeData(name) {
+      function writeData() {
        firebase.database().ref().set({
-        testName: name 
+        testName: "Written!"
        });
       }
      </script>
@@ -32,7 +32,7 @@
      <p id="data"></p>
 
     
-    <button class="instructionButton" ng-click="writeData('Written!!')"><h2>Add Data to DB</h2></button>
+    <button class="instructionButton" ng-click="writeData()"><h2>Add Data to DB</h2></button>
  
  </body>
 </html>
