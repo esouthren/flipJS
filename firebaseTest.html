@@ -1,0 +1,38 @@
+<html>
+<head>
+ <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB1zlLJD6-hh1iJSlo8GWtvoEWwn_KTxxA",
+        authDomain: "flipjs-71ead.firebaseapp.com",
+        databaseURL: "https://flipjs-71ead.firebaseio.com",
+        storageBucket: "flipjs-71ead.appspot.com",
+        messagingSenderId: "1024881533542"
+      };
+      firebase.initializeApp(config);
+    </script>
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <script src="jsController.js"></script>    
+    
+    </head>
+    <body>
+    Databse data retrieval Test
+    <br /><br />
+    <script>
+    
+    ref.on("value", function(snapshot) {
+    for (x in snapshot.val()) {
+        var xRef = new Firebase("https://flipjs-71ead.firebaseio.com/"+x+"/");
+        xRef.once("value", function(xsnapshot) {
+            var data = xsnapshot.val();
+            var name = data["myString"];
+            console.log(name);
+        });
+    }
+});
+    
+    
