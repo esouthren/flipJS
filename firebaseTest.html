@@ -22,6 +22,7 @@
     <body>
     Databse data retrieval Test
     <br /><br />
+     <p id="data"></p>
     <script>
     
     ref.on("value", function(snapshot) {
@@ -31,8 +32,13 @@
             var data = xsnapshot.val();
             var name = data["myString"];
             console.log(name);
+         document.getElementByID("data").innerHTML = name;
         });
     }
 });
+     
+     </script>
+ </body>
+</html>
     
     
