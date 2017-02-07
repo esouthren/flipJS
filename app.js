@@ -1,7 +1,7 @@
 var todomvc = angular.module('todomvc', ['firebase']);
 
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebase) {
-	var fireRef = new Firebase('https://firebasingtodos.firebaseio.com/');
+	var fireRef = new Firebase('https://flipjs-71ead.firebaseio.com/');
 	$scope.todos = $firebase(fireRef).$asArray();
 	$scope.newTodo = '';
 	$scope.editedTodo = null;
