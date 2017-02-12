@@ -12,35 +12,35 @@
 			<section class='row'>
 				<header>
 					<h1 class='text-center'>What do you have to do?</h1>
-					<span><strong>{{remainingCount}}</strong> things todo</span>
-					<form ng-submit="addTodo()">
-						<input class='form-control' placeholder="What needs to be done?" ng-model="newTodo" autofocus>
-					</form>
-				</header>
-				<section ng-show="totalCount" ng-cloak>
-					<!-- Mark all todos as complete -->
-					<input type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
-					<label for="toggle-all">Mark all as complete</label>
+					<span><strong>{{totalScores}}</strong> scores in the DB</span><br />
+                    <input ng-model="newScore" >
+                    <button ng-click="addScore()" >Add Score!</button>
+                    <button ng-click="catEasy()" >Easy</button> <button ng-click="catMed()" > Medium</button>  <button ng-click="catDiff()" > Difficult</button>
+                 
+                    <br />Max: {{ max }}
+                    
 					
-					<h3>All things todo</h3>
+				</header>
+
+					
+					<h3>All Scores</h3>
 					<p>Double-click to edit a todo</p>
 					<div class="list-group">
-						<div ng-repeat="todo in todos" class="list-group-item" ng-class="{editing: todo == editedTodo}">
-							<div class="view" ng-if='todo !== editedTodo'>
-								<input type="checkbox" ng-model="todo.completed" ng-change="todos.$save(todo)">
+						<div ng-repeat="score in scores" class="list-group-item" >
+							<div class="view" >
+								
 
-								<label ng-dblclick="editTodo(todo)" ng-if='todo.completed' ng-style="{'text-decoration': 'line-through'}">{{todo.title}}</label>
-								<label ng-dblclick="editTodo(todo)" ng-if='!todo.completed' ng-style="{'text-decoration': 'none'}">{{todo.title}}</label>
+								<label>{{score.name}}<br />{{score.score}}<br /></label>
+                                
+                                
 
-								<button class='btn btn-danger pull-right' ng-click="removeTodo(todo)">X</button>
+								<button class='btn btn-danger pull-right' ng-click="removeScore(score)">X</button>
 							</div>
-							<form ng-submit="doneEditing(todo)" ng-if='todo == editedTodo'>
-								<input class="edit" ng-model="todo.title" todo-blur="doneEditing(todo)" todo-focus="todo == editedTodo">
-							</form>
+
 						</div>
 					</div>
-					<div class='btn btn-default pull-right' ng-click='clearCompletedTodos()'>Clear completed todos</div>
-				</section>
+					
+				
 			</section>
 		</div>
 

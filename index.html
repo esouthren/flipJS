@@ -3,9 +3,13 @@
     
     <head>
     <link rel="stylesheet" type="text/css" href="style.css">
+        
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
     <script src="jsController.js"></script>    
     </head>
     
@@ -13,22 +17,62 @@
 
 <body>
 
-<div ng-app="myApp" ng-controller="MinesweeperController"> 
+<div ng-app="flipJs" ng-controller="MinesweeperController"> 
 
+    <div id="winning" ng-hide="scoresToggle">
+        
+        <h1><center>High Scores</center></h1>
+        <h2>
+        <table class="scoresTableHead">
+            <tr>
+                <td class="scoresTableHeader"> <button class="scoreButton" ng-click="catEasy()"><h2>Easy</h2></button></td>
+        <td class="scoresTableHeader"><button class="scoreButton" ng-click="catMed()"><h2>Medium</h2></button></td>
+        <td class="scoresTableHeader"><button class="scoreButton" ng-click="catDiff()"><h2>Difficult</h2></button></td>
+        <td class="scoresTableHeader"><button class="scoreButton" ng-click="catDiff()"><h2>Legendary</h2></button></td>
+            </tr>
+            </table>
+<br />
+        <table class="scoresTable">
+           
+            <tr ng-repeat="score in scores">
+                <td style="font-size:{{150-($index*10)}}%" class="scoreTableCell"> {{ $index+1 }} : {{score.name}}</td>
+                  
+                <td style="font-size:{{150-($index*10)}}%" class="scoresTableRightCell"> {{score.score}}
+               </td>
+         
+                
+           </tr>
+        </table>    
+        </h2><br /><br />
+        <button class="instructionButton" ng-click="closeScores()"><h2>Close</h2></button>
+
+    </div>
     
     <div id="winning" ng-hide="winToggle">
         <br /><br />
         <center>
         <h1>WINNER!</h1>
         <br />
+            
         <h2>Difficulty: {{ difficulty }}
             <br /><br />
             Clicks: {{ clicks }}
         <br /><br />
-            {{ winMessage }} </h2></center><br /><br />
-        <button class="instructionButton" ng-click="newGame()"><h2>Play Again</h2></button>
+            {{ winMessage }} </h2></center><br />
+    
+        <div ng-hide="newHighScore">
+           <h1><center>New High Score!</center></h1>
+              <center><input onClick="this.select();" type="text" placeholder="your name" ng-model="userName" autofocus></center>
+     
+            <br />
+            <button class ="instructionButton" ng-click="addScore()"><h2>Submit High Score</h2></button>
+        </div>
         
-     </div> 
+        <br /><br />
+        <button ng-hide="noNewHighScore" class="instructionButton" ng-click="newGame()"><h2>Play Again</h2></button>
+<br />
+       
+    </div> 
     
  <div id="main">
      <button class="openMenu" ng-click="menuButton()" ><img src="images/cog.png" height=30 width=30/></button>
@@ -44,8 +88,8 @@
             <br /><br /><br />
             <button class="instructionButton" ng-click="instructionButton()"><h2>Instructions</h2></button>
             <br /><br />
-            <button class="instructionButton" ng-click="newGame()"><h2>New Game</h2></button>
-                
+            <button class="instructionButton" ng-click="newGame()"><h2>New Game</h2></button><br /><br />
+            <button class="instructionButton" ng-click="closeScores()"><h2>High Scores</h2></button>    
                 
 
 <div class="blue" ng-hide="myCheck"></div>
@@ -55,13 +99,14 @@
      
      <img src="images/headerImage.png" align="right"/>
             
-            <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
+      <div id="winning" ng-hide="welcomeToggle">
            
-            <div class="welcome" ng-hide="welcomeToggle">
+           
+            
                 <img src="images/splashImage.png" class="instructionImage"><br />
                 <div class="whiteSpace" ng-hide="whiteSpaceToggle" > </div>
                 <button class="instructionButton" ng-click="getStartedButton()"><h2>{{ instructionButtonText }}</h2>        </button>
-            </div>
+    </div>
             
             <div id="menuBodyCover" ng-click="menuButton()" ng-hide="menuToggle"></div>
             
@@ -71,15 +116,17 @@
             
             
             <div class="whiteSpace" ng-hide="difficultyToggle" > </div>
+     <br />
+     <br />
             <table class="difficultyGrid"><tr><td>
-                <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(3,3,117)"  ng-hide="difficultyToggle"><h2>easy</h2></button></td>
+                <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(3,3,117)"  ng-hide="difficultyToggle"><h1>easy</h1></button></td>
                 <td>
-                    <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(5,5,70)" ng-hide="difficultyToggle" align="right"><h2>medium</h2></button></td>
+                    <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(5,5,70)" ng-hide="difficultyToggle" align="right"><h1>medium</h1></button></td>
                 </tr>
                 <tr><td>
-                    <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(7,7,50)" ng-hide="difficultyToggle"><h2>difficult</h2></button></td>
+                    <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(7,7,50)" ng-hide="difficultyToggle"><h1>difficult</h1></button></td>
                     <td>
-                        <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(10,10,35)" ng-hide="difficultyToggle"><h2>what are <br />you thinking</h2></button></td></tr>
+                        <button class="difficultyButton" style="top: 70px;" ng-click="difficultyButton(10,10,35)" ng-hide="difficultyToggle"><h1>legendary</h1></button></td></tr>
             </table>       
             
             <table class="minefield" ng-hide="gridToggle">
@@ -97,8 +144,10 @@
      
 
             <button class="clickButton" ng-hide="gridToggle"><h2>Clicks: {{ clicks }}</h2></button>
+     <br /><br />
 
     </div>
+   
 </div>
 
 
