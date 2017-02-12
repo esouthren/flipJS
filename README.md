@@ -1,4 +1,6 @@
 # flipJS
 flip game built in AngularJS
 
-Play live at https://esouthren.github.io/flipJS/
+Database high score system created with Firebase/AngularFire
+
+Play live at http://flipjs.azurewebsites.net/
