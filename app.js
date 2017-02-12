@@ -1,99 +1,92 @@
 var todomvc = angular.module('todomvc', ['firebase']);
 
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebase) {
+    
+   
 	var fireRef = new Firebase('https://flipjs-71ead.firebaseio.com/');
-	$scope.todos = $firebase(fireRef).$asArray();
-	$scope.newTodo = '';
-	$scope.editedTodo = null;
+    
+    $scope.currentCat = "easy";
+    
+    var scores = fireRef.child($scope.currentCat);
+ 
+    $scope.scores = $firebase(scores).$asArray();
 
-	$scope.$watch('todos', function(){
+    
+    var categoryType = "scores"; // to change category style in $watch function
+
+	$scope.$watch(categoryType, function(){
 		var total = 0;
-		var remaining = 0;
-		$scope.todos.forEach(function(todo){
-			total++;
-			if (todo.completed === false) {
-				remaining++;
-			}
+		$scope.scores.forEach(function(scores){
+           total++;
 		});
-		$scope.totalCount = total;
-		$scope.remainingCount = remaining;
-		$scope.allChecked = remaining === 0;
-	}, true);
+        
+        $scope.max = 0;
+        for (var i = 0; i < $scope.scores.length; i++) {
+            if ($scope.scores[i].score > $scope.max) {
+                 $scope.max = $scope.scores[i].score;
+                 $scope.maxObj = $scope.scores[i];
+            }
+        }
+		$scope.totalScores = total;	
+}, true);
+ 
+    $scope.catEasy = function() {
+        $scope.currentCat = "easy";
+         var scores = fireRef.child($scope.currentCat);
+         $scope.scores = $firebase(scores).$asArray();
+    };
+    
+    $scope.catMed = function() {
+        $scope.currentCat = "medium";
+        var scores = fireRef.child($scope.currentCat);
+        $scope.scores = $firebase(scores).$asArray();
+    };
+    
+    $scope.catDiff = function() {
+        $scope.currentCat = "difficult";
+        var scores = fireRef.child($scope.currentCat);
+         $scope.scores = $firebase(scores).$asArray();
+    };
 
-	$scope.addTodo = function(){
-		var newTodo = $scope.newTodo.trim();
-		if (!newTodo.length) {
-			return;
-		}
-		// push to firebase
-		$scope.todos.$add({
-			title: newTodo,
-			completed: false
-		});
-		$scope.newTodo = '';
+	$scope.addScore = function(){
+        
+       
+        
+
+        if ($scope.totalScores < 5)  {
+            $scope.scores.$add({
+                name: 'name',    // user input name
+                score: $scope.newScore // $clicks
+
+            });
+        }
+        else {
+                if ($scope.newScore <= $scope.max) {
+                    $scope.scores.$add({
+                    name: 'less than max',    // user input name
+                    score: $scope.newScore // $clicks
+
+                    });
+                    for (var i = 0; i < $scope.scores.length; i++) {
+                        if ($scope.scores[i].score == $scope.max) {
+                            $scope.scores.$remove($scope.scores[i]);
+                            break;
+                        }
+                    }
+            
+            }
+        
+        }
 	};
 
-	$scope.editTodo = function(todo){
-		$scope.editedTodo = todo;
-		$scope.originalTodo = angular.extend({}, $scope.editedTodo);
+
+
+	$scope.removeScore = function(score){
+		$scope.scores.$remove(score);
 	};
 
-	// update todo for changes we made
-	$scope.doneEditing = function(todo){
-		$scope.editedTodo = null;
-		var title = todo.title.trim();
-		if (title) {
-			$scope.todos.$save(todo);
-		} else {
-			$scope.removeTodo(todo);
-		}
-	};
 
-	$scope.removeTodo = function(todo){
-		$scope.todos.$remove(todo);
-	};
-
-	// delete all todos that have been completed
-	$scope.clearCompletedTodos = function(){
-		angular.forEach($scope.todos, function(todo){
-			if (todo.completed){
-				$scope.todos.$remove(todo);
-			}
-		});
-	};
-
-	// toggle completion status for all todos
-	$scope.markAll = function(allCompleted){
-		console.log(allCompleted)
-		angular.forEach($scope.todos, function(todo){
-			todo.completed = allCompleted;
-			console.log(todo)
-			$scope.todos.$save(todo);
-		});
-		
-	};
+	
 });
 
 
-// TODO focus and blur directives
-todomvc.directive('todoFocus', function todoFocus($timeout){
-	return function(scope, elem, attrs){
-		scope.$watch(attrs.todoFocus, function(newVal){
-			if (newVal){
-				$timeout(function(){
-					// sets focus to edit input field
-					elem[0].focus();
-				}, 0, false);
-			}
-		});
-	};
-});
-
-todomvc.directive('todoBlur', function () {
-	return function (scope, elem, attrs) {
-		elem.bind('blur', function(){
-			// run function we pass in to attribute on blur
-			scope.$apply(attrs.todoBlur);
-		});
-	};
-});

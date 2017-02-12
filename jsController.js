@@ -1,9 +1,10 @@
-angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', function($scope) {
-    
+var flipJs = angular.module('flipJs', ['ngAnimate', 'firebase']);
+
+flipJs.controller('MinesweeperController', function MinesweeperController($scope, $location, $firebase) {
 
     
     
-    $scope.coveredImage = "covered.png";
+     $scope.coveredImage = "covered.png";
     $scope.emptyImage = "empty.png";
     $scope.squareSize = 30;
 
@@ -21,11 +22,101 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
     $scope.instructionButtonText = "Get Started";
     $scope.gameActive = false;
     $scope.minefieldClass = "minefieldSmallTd";
-    $scope.difficulty = "shmoop";
+ 
     $scope.winMessage = "dslkfjgh";
     $scope.menuClass = "menu";
   
+    $scope.scoresToggle = true;
+    $scope.userName = "";
+    $scope.newHighScore = false;
+    $scope.noNewHighScore = true;
     
+    $scope.userName = "your name";
+    
+    
+    // --------------------------- FIREBASE SHIZZBITS ----------------------
+    
+     var fireRef = new Firebase('https://flipjs-71ead.firebaseio.com/');
+    
+    $scope.difficulty = "easy";
+    
+    var scores = fireRef.child($scope.difficulty);
+ 
+    $scope.scores = $firebase(scores).$asArray();
+
+    
+    var categoryType = "scores"; // to change category style in $watch function
+
+	$scope.$watch(categoryType, function(){
+		var total = 0;
+		$scope.scores.forEach(function(scores){
+           total++;
+		});
+        
+        $scope.max = 0;
+        for (var i = 0; i < $scope.scores.length; i++) {
+            if ($scope.scores[i].score > $scope.max) {
+                 $scope.max = $scope.scores[i].score;
+                 $scope.maxObj = $scope.scores[i];
+            }
+        }
+		$scope.totalScores = total;	
+}, true);
+ 
+    $scope.catEasy = function() {
+        $scope.difficulty = "easy";
+         var scores = fireRef.child($scope.difficulty);
+         $scope.scores = $firebase(scores).$asArray();
+    };
+    
+    $scope.catMed = function() {
+        $scope.difficulty = "medium";
+        var scores = fireRef.child($scope.difficulty);
+        $scope.scores = $firebase(scores).$asArray();
+    };
+    
+    $scope.catDiff = function() {
+        $scope.difficulty = "difficult";
+        var scores = fireRef.child($scope.difficulty);
+         $scope.scores = $firebase(scores).$asArray();
+    };
+
+    
+    // Add new High Score
+	$scope.addScore = function(){      
+       
+        if ($scope.totalScores < 5)  {
+            $scope.scores.$add({
+                name: $scope.userName,    // user input name
+                score: $scope.clicks // $clicks
+
+            });
+        }
+        else {
+                if ($scope.clicks <= $scope.max) {
+                    $scope.scores.$add({
+                    name: $scope.userName,    // user input name
+                    score: $scope.clicks // $clicks
+
+                    });
+                    for (var i = 0; i < $scope.scores.length; i++) {
+                        if ($scope.scores[i].score == $scope.max) {
+                            $scope.scores.$remove($scope.scores[i]);
+                            break;
+                        }
+                    }
+            
+            }
+        
+        }
+        
+        $scope.newGame();
+	};
+   
+    
+    // -------------------- // END OF FIREBASE GIBBLETS ---------------------------------
+    
+   
     
     $scope.difficultyButton = function(length, height, squareSize) {
             
@@ -50,6 +141,7 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
             else if (length === 5) {
                 $scope.minefieldClass = "minefieldMediumTd";
                 $scope.difficulty = "Medium";
+              
                 $scope.winMessage = "> Now you're getting somewhere!";
             }
             else if (length === 7) {
@@ -65,6 +157,7 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
     }
     
     $scope.winShortcut = function() {
+        allActive = true;
         $scope.winToggle = false;
     }
         
@@ -96,9 +189,12 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
         else {
             $scope.menuToggle = true;
             $scope.menuClass = "menu2";
-        }
-    
+        }  
         
+    }
+    
+    $scope.closeScores = function() {
+        $scope.scoresToggle = ($scope.scoresToggle) ? false : true;
     }
     
     $scope.redScheme = function() {
@@ -165,6 +261,8 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
         $scope.welcomeToggle = true;
         $scope.menuToggle = true;
         $scope.gameActive = false;
+        $scope.newHighScore = true;
+        $scope.userName = "your name";
         $scope.setLayout();
         if (!$scope.winToggle) { $scope.winToggle = true; }
 
@@ -189,6 +287,7 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
         $scope.west.isCovered = ($scope.west.isCovered) ? false : true;
     }
     
+    
     $scope.hasWon = function() {
        
         allActive = true;
@@ -204,15 +303,20 @@ angular.module('myApp', ['ngAnimate']).controller('MinesweeperController', funct
                 }
             }
         }
+        
         if (allDeactive || allActive) {
-            
-          
-  
+            if ($scope.clicks <= $scope.max) {
+                $scope.newHighScore = false;
+                $scope.noNewHighScore = true;
+            } else {
+                $scope.newHighScore = true;
+                $scope.noNewHighScore = false;
+            }
             $scope.winToggle = false;
+            
+            
         }
-        else { 
-            $scope.winner = "";
-        }
+     
     }
     $scope.flip = function(x,y) {
         
