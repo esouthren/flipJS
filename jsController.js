@@ -1,10 +1,8 @@
 var flipJs = angular.module('flipJs', ['ngAnimate', 'firebase']);
 
-flipJs.controller('MinesweeperController', function MinesweeperController($scope, $location, $firebase) {
-
+flipJs.controller('MinesweeperController', function MinesweeperController($scope, $location, $firebase) {    
     
-    
-     $scope.coveredImage = "covered.png";
+    $scope.coveredImage = "covered.png";
     $scope.emptyImage = "empty.png";
     $scope.squareSize = 30;
 
@@ -27,7 +25,7 @@ flipJs.controller('MinesweeperController', function MinesweeperController($scope
     $scope.menuClass = "menu";
   
     $scope.scoresToggle = true;
-    $scope.userName = "";
+
     $scope.newHighScore = false;
     $scope.noNewHighScore = true;
     
@@ -36,7 +34,7 @@ flipJs.controller('MinesweeperController', function MinesweeperController($scope
     
     // --------------------------- FIREBASE SHIZZBITS ----------------------
     
-     var fireRef = new Firebase('https://flipjs-71ead.firebaseio.com/');
+    var fireRef = new Firebase('https://flipjs-71ead.firebaseio.com/');
     
     $scope.difficulty = "easy";
     
@@ -80,6 +78,12 @@ flipJs.controller('MinesweeperController', function MinesweeperController($scope
         var scores = fireRef.child($scope.difficulty);
          $scope.scores = $firebase(scores).$asArray();
     };
+	
+	$scope.catLeg = function() {
+	$scope.difficulty = "legendary";
+	var scores = fireRef.child($scope.difficulty);
+	 $scope.scores = $firebase(scores).$asArray();
+    };
 
     
     // Add new High Score
@@ -118,8 +122,7 @@ flipJs.controller('MinesweeperController', function MinesweeperController($scope
     
    
     
-    $scope.difficultyButton = function(length, height, squareSize) {
-            
+    $scope.difficultyButton = function(length, height, squareSize) {            
             
             $scope.HEIGHT = height;
             $scope.LENGTH = length;
